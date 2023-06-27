@@ -86,7 +86,7 @@ namespace Create_Qrcode
 
         private void button3_Click(object sender, EventArgs e)
         {
-            progressBar1.Value=0;
+            progressBar1.Value = 0;
             if (!isGeneratingImages && !ImageGenerationWorker.IsBusy)
             {
                 isGeneratingImages = true;
@@ -129,10 +129,7 @@ namespace Create_Qrcode
             // Cập nhật giá trị của ProgressBar thành giá trị tối đa
             progressBar1.Value = progressBar1.Maximum;
 
-            if (ImageGenerationWorker.IsBusy)
-            {
-                ImageGenerationWorker.CancelAsync();
-            }
+            isGeneratingImages = false;
 
             // Hiển thị thông báo hoàn thành cho người dùng
             status.Text = "Hoàn thành";
@@ -211,5 +208,6 @@ namespace Create_Qrcode
         {
             pngPath = richTextBox1.Text;
         }
+
     }
 }
