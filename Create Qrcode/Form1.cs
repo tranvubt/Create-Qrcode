@@ -79,7 +79,7 @@ namespace Create_Qrcode
                     rootFolderPath = fbd.SelectedPath;
                     Properties.Settings.Default.FolderPath = rootFolderPath;
                     Properties.Settings.Default.Save();
-                    richTextFolder.Text = "Có " + Directory.GetDirectories(rootFolderPath).Length + " sản phẩm";
+                    richTextFolder.Text = Path.GetFileName(rootFolderPath) +" Có " + Directory.GetDirectories(rootFolderPath).Length + " sản phẩm";
                 }
             }
         }
