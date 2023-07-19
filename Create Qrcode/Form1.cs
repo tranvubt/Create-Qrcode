@@ -2,6 +2,7 @@
 using SkiaSharp;
 using Svg.Skia;
 using System.ComponentModel;
+using System.IO;
 using System.Text.RegularExpressions;
 
 namespace Create_Qrcode
@@ -24,21 +25,27 @@ namespace Create_Qrcode
             string savedPngPath = Properties.Settings.Default.PngPath;
 
             // Kiểm tra xem đường dẫn đã được lưu trữ hay chưa
-            if (!string.IsNullOrEmpty(savedFolderPath))
+            try
             {
-                richTextFolder.Text = "Có " + Directory.GetDirectories(savedFolderPath).Length + " sản phẩm";
-                rootFolderPath = savedFolderPath;
-            }
+                if (!string.IsNullOrEmpty(savedFolderPath))
+                {
+                    richTextFolder.Text = "Có " + Directory.GetDirectories(savedFolderPath).Length + " sản phẩm";
+                    rootFolderPath = savedFolderPath;
+                }
 
-            if (!string.IsNullOrEmpty(savedExcelPath))
-            {
-                addDataWithExcel(savedExcelPath);
-                richTextData.Text = "Có " + qrCodes.Count + " dữ liệu";
-            }
+                if (!string.IsNullOrEmpty(savedExcelPath))
+                {
+                    addDataWithExcel(savedExcelPath);
+                    richTextData.Text = "Có " + qrCodes.Count + " dữ liệu";
+                }
 
-            if (!string.IsNullOrEmpty(savedPngPath))
+                if (!string.IsNullOrEmpty(savedPngPath))
+                {
+                    richTextBox1.Text = savedPngPath;
+                }
+            }
+            catch (Exception)
             {
-                richTextBox1.Text = savedPngPath;
             }
 
             button3.Click += button3_Click;
@@ -106,7 +113,10 @@ namespace Create_Qrcode
             foreach (var qrCode in qrCodes)
             {
                 string folderPath = Path.Combine(rootFolderPath, qrCode.IdLink);
-
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
                 string outputFilePath = Path.Combine(folderPath, "WTM Qrcode.jpg");
                 qrCode.CreateQrCode(outputFilePath, pngPath, textEdit);
 

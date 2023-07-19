@@ -73,8 +73,9 @@ namespace Create_Qrcode
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception er)
             {
+                int o = 5;
             }
         }
     }
